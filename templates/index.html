@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            width: 600px;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .form-group {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .form-column {
+            width: 48%;
+        }
+
+        label {
+            font-size: 1.2em;
+            color: #555;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.9em;
+            margin-top: -8px;
+            margin-bottom: 10px;
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Predict House Price</h1>
+        <form id="priceForm" action="/predict" method="POST" onsubmit="return validateForm()">
+            <div class="form-group">
+                <div class="form-column">
+                    <label>Area (sq. ft.):</label>
+                    <input type="text" name="area" id="area">
+                    <span class="error" id="area-error">Area is required</span>
+
+                    <label>Bedrooms:</label>
+                    <input type="text" name="bedrooms" id="bedrooms">
+                    <span class="error" id="bedrooms-error">Bedrooms are required</span>
+
+                    <label>Bathrooms:</label>
+                    <input type="text" name="bathrooms" id="bathrooms">
+                    <span class="error" id="bathrooms-error">Bathrooms are required</span>
+
+                    <label>Stories:</label>
+                    <input type="text" name="stories" id="stories">
+                    <span class="error" id="stories-error">Stories are required</span>
+
+                    <label>Main Road (1 for Yes, 0 for No):</label>
+                    <input type="text" name="mainroad" id="mainroad">
+                    <span class="error" id="mainroad-error">Main Road is required</span>
+
+                    <label>Hot Water Heating (1 for Yes, 0 for No):</label>
+                    <input type="text" name="hotwaterheating" id="hotwaterheating">
+                    <span class="error" id="hotwaterheating-error">Hot Water Heating is required</span>
+
+                    <label>Preferred Area (1 for Yes, 0 for No):</label> <!-- Added prefarea -->
+                    <input type="text" name="prefarea" id="prefarea"> <!-- Added field -->
+                    <span class="error" id="prefarea-error">Preferred Area is required</span>
+                </div>
+                <div class="form-column">
+                    <label>Guest Room (1 for Yes, 0 for No):</label>
+                    <input type="text" name="guestroom" id="guestroom">
+                    <span class="error" id="guestroom-error">Guest Room is required</span>
+
+                    <label>Basement (1 for Yes, 0 for No):</label>
+                    <input type="text" name="basement" id="basement">
+                    <span class="error" id="basement-error">Basement is required</span>
+
+                    <label>Air Conditioning (1 for Yes, 0 for No):</label>
+                    <input type="text" name="airconditioning" id="airconditioning">
+                    <span class="error" id="airconditioning-error">Air Conditioning is required</span>
+
+                    <label>Parking Spaces:</label>
+                    <input type="text" name="parking" id="parking">
+                    <span class="error" id="parking-error">Parking spaces are required</span>
+
+                    <label>Furnishing Status (2 for Furnished, 1 for Semi-Furnished, 0 for Unfurnished):</label>
+                    <input type="text" name="furnishingstatus" id="furnishingstatus">
+                    <span class="error" id="furnishingstatus-error">Furnishing Status is required</span>
+                </div>
+            </div>
+            <input type="submit" value="Predict">
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            let isValid = true;
+            let fields = ['area', 'bedrooms', 'bathrooms', 'stories', 'mainroad', 'hotwaterheating', 'prefarea', 'guestroom', 'basement', 'airconditioning', 'parking', 'furnishingstatus'];
+
+            fields.forEach(function(field) {
+                let input = document.getElementById(field);
+                let error = document.getElementById(field + '-error');
+
+                if (input.value === "") {
+                    error.style.display = 'block';
+                    isValid = false;
+                } else {
+                    error.style.display = 'none';
+                }
+            });
+
+            return isValid;
+        }
+    </script>
+</body>
+</html>
